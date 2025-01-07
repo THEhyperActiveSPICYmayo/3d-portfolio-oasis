@@ -1,11 +1,5 @@
 import { motion } from 'framer-motion';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { ProjectsCarousel } from './projects/ProjectsCarousel';
 
 const projects = [
   {
@@ -50,60 +44,7 @@ export const ProjectsSection = () => {
             creating engaging digital experiences.
           </p>
         </motion.div>
-
-        <div className="mx-auto max-w-5xl px-8">
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent>
-              {projects.map((project, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="group relative perspective"
-                  >
-                    <div className="relative h-[400px] transform-style-3d transition-transform duration-500 group-hover:rotate-y-180">
-                      <div className="absolute inset-0 backface-hidden">
-                        <div className="h-full overflow-hidden rounded-xl glass neon-border border-neon-pink">
-                          <img
-                            src={project.image}
-                            alt={project.title}
-                            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                          />
-                        </div>
-                      </div>
-                      <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-xl glass bg-black/50 p-6 neon-border border-neon-pink">
-                        <div className="flex h-full flex-col justify-center">
-                          <h3 className="text-xl font-bold mb-2 text-white">{project.title}</h3>
-                          <p className="text-muted-foreground mb-4">{project.description}</p>
-                          <div className="flex flex-wrap gap-2">
-                            {project.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="px-3 py-1 rounded-full text-xs font-medium bg-neon-pink/10 text-neon-pink neon-glow"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="border-neon-pink text-neon-pink neon-border" />
-            <CarouselNext className="border-neon-pink text-neon-pink neon-border" />
-          </Carousel>
-        </div>
+        <ProjectsCarousel projects={projects} />
       </div>
     </section>
   );
