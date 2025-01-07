@@ -1,6 +1,34 @@
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
+import { useState } from 'react';
+import { useToast } from "@/components/ui/use-toast";
+import { Mail } from 'lucide-react';
 
 export const ContactSection = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const iconControls = useAnimation();
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Animate the icon
+    await iconControls.start({
+      rotate: [0, 360],
+      scale: [1, 1.2, 1],
+      transition: { duration: 0.5 }
+    });
+
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitting(false);
+      toast({
+        title: "Message sent!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+    }, 1000);
+  };
+
   return (
     <section id="contact" className="section-padding bg-gradient-to-b from-background to-background/50">
       <div className="container mx-auto">
@@ -30,7 +58,14 @@ export const ContactSection = () => {
           viewport={{ once: true }}
           className="max-w-md mx-auto"
         >
-          <form className="space-y-6">
+          <motion.div
+            animate={iconControls}
+            className="flex justify-center mb-8"
+          >
+            <Mail className="w-12 h-12 text-neon-green" />
+          </motion.div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium text-white">
                 Name
@@ -38,7 +73,7 @@ export const ContactSection = () => {
               <input
                 id="name"
                 type="text"
-                className="flex h-10 w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white neon-border"
+                className="flex h-10 w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white neon-border transition-all duration-300 focus:border-neon-green hover:border-neon-green/70"
                 placeholder="Your name"
               />
             </div>
@@ -49,7 +84,7 @@ export const ContactSection = () => {
               <input
                 id="email"
                 type="email"
-                className="flex h-10 w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white neon-border"
+                className="flex h-10 w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white neon-border transition-all duration-300 focus:border-neon-green hover:border-neon-green/70"
                 placeholder="Your email"
               />
             </div>
@@ -59,15 +94,16 @@ export const ContactSection = () => {
               </label>
               <textarea
                 id="message"
-                className="flex min-h-[120px] w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white neon-border"
+                className="flex min-h-[120px] w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white neon-border transition-all duration-300 focus:border-neon-green hover:border-neon-green/70"
                 placeholder="Your message"
               />
             </div>
             <button
               type="submit"
+              disabled={isSubmitting}
               className="neon-button inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-neon-green/20 text-neon-green hover:bg-neon-green/30 h-11 px-8 w-full neon-glow"
             >
-              Send Message
+              {isSubmitting ? "Sending..." : "Send Message"}
             </button>
           </form>
         </motion.div>

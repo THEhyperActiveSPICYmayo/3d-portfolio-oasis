@@ -68,4 +68,55 @@
   .neon-button:hover::before {
     @apply opacity-30;
   }
+
+  .perspective {
+    perspective: 1000px;
+  }
+
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  /* Enhanced Neon Effects */
+  .neon-pulse {
+    animation: neon-pulse 2s infinite;
+  }
+
+  .neon-text {
+    text-shadow: 0 0 10px currentColor,
+                 0 0 20px currentColor,
+                 0 0 30px currentColor,
+                 0 0 40px currentColor;
+  }
+
+  .neon-hover {
+    @apply transition-all duration-300;
+  }
+
+  .neon-hover:hover {
+    filter: brightness(1.2);
+    text-shadow: 0 0 10px currentColor,
+                 0 0 20px currentColor,
+                 0 0 30px currentColor,
+                 0 0 40px currentColor;
+  }
+}
+
+@keyframes neon-pulse {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.8;
+    filter: brightness(1.2);
+  }
 }
