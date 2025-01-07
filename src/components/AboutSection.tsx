@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export const AboutSection = () => {
   return (
-    <section id="about" className="section-padding">
+    <section id="about" className="section-padding bg-gradient-to-b from-background to-background/50">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -12,10 +12,10 @@ export const AboutSection = () => {
           className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
         >
           <div className="space-y-6">
-            <span className="px-4 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary inline-block">
+            <span className="px-4 py-1 rounded-full text-sm font-medium bg-neon-blue/10 text-neon-blue neon-glow inline-block">
               About Me
             </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white">
               Passionate about creating impactful digital experiences
             </h2>
             <p className="text-muted-foreground">
@@ -31,9 +31,8 @@ export const AboutSection = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="aspect-square rounded-2xl overflow-hidden glass p-8">
-              {/* Placeholder for 3D workspace - will be implemented in next iteration */}
-              <div className="w-full h-full bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl" />
+            <div className="aspect-square rounded-2xl overflow-hidden glass p-8 neon-border border-neon-blue">
+              <div className="w-full h-full bg-gradient-to-br from-neon-blue/5 to-neon-purple/10 rounded-xl" />
             </div>
           </motion.div>
         </motion.div>

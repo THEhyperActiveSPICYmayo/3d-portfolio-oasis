@@ -4,14 +4,14 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 263.4 70% 50.4%;
+    --primary-foreground: 210 40% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
@@ -37,35 +37,35 @@
   }
 
   .glass {
-    @apply bg-white/10 backdrop-blur-md border border-white/20;
+    @apply bg-black/10 backdrop-blur-md border border-white/20;
   }
 
   .section-padding {
     @apply py-20 px-6 md:px-12 lg:px-24;
   }
-}
 
-.parallax {
-  overflow: hidden;
-  letter-spacing: -2px;
-  line-height: 0.9;
-  margin: 0;
-  white-space: nowrap;
-  display: flex;
-  flex-wrap: nowrap;
-}
+  .neon-glow {
+    text-shadow: 0 0 10px currentColor,
+                 0 0 20px currentColor,
+                 0 0 30px currentColor;
+  }
 
-.parallax .scroller {
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 64px;
-  display: flex;
-  white-space: nowrap;
-  display: flex;
-  flex-wrap: nowrap;
-}
+  .neon-border {
+    box-shadow: 0 0 10px currentColor,
+                0 0 20px currentColor,
+                inset 0 0 10px currentColor;
+  }
 
-.parallax span {
-  display: block;
-  margin-right: 30px;
+  .neon-button {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+
+  .neon-button::before {
+    content: '';
+    @apply absolute inset-0 bg-current opacity-20 transition-opacity duration-300;
+  }
+
+  .neon-button:hover::before {
+    @apply opacity-30;
+  }
 }

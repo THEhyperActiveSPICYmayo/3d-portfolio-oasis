@@ -18,11 +18,13 @@ export default {
       },
     },
     extend: {
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        display: ["Clash Display", "sans-serif"],
-      },
       colors: {
+        neon: {
+          blue: "#0EA5E9",
+          pink: "#D946EF",
+          green: "#4ADE80",
+          purple: "#8B5CF6",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

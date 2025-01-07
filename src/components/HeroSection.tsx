@@ -35,7 +35,7 @@ export const HeroSection = () => {
       color: 0x8B5CF6,
       wireframe: true,
       emissive: 0x8B5CF6,
-      emissiveIntensity: 0.5,
+      emissiveIntensity: 0.8,
     });
     const icosahedron = new THREE.Mesh(icoGeometry, icoMaterial);
     shapes.push(icosahedron);
@@ -46,7 +46,7 @@ export const HeroSection = () => {
       color: 0xD946EF,
       wireframe: true,
       emissive: 0xD946EF,
-      emissiveIntensity: 0.5,
+      emissiveIntensity: 0.8,
     });
     const torus = new THREE.Mesh(torusGeometry, torusMaterial);
     torus.position.x = 2;
@@ -58,11 +58,23 @@ export const HeroSection = () => {
       color: 0x0EA5E9,
       wireframe: true,
       emissive: 0x0EA5E9,
-      emissiveIntensity: 0.5,
+      emissiveIntensity: 0.8,
     });
     const octahedron = new THREE.Mesh(octaGeometry, octaMaterial);
     octahedron.position.x = -2;
     shapes.push(octahedron);
+
+    // Dodecahedron with neon green
+    const dodecaGeometry = new THREE.DodecahedronGeometry(0.8);
+    const dodecaMaterial = new THREE.MeshPhongMaterial({
+      color: 0x4ADE80,
+      wireframe: true,
+      emissive: 0x4ADE80,
+      emissiveIntensity: 0.8,
+    });
+    const dodecahedron = new THREE.Mesh(dodecaGeometry, dodecaMaterial);
+    dodecahedron.position.y = 2;
+    shapes.push(dodecahedron);
 
     shapes.forEach(shape => sceneRef.current?.add(shape));
 
@@ -109,7 +121,8 @@ export const HeroSection = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/50">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.1)_0%,transparent_100%)]" />
       <div ref={containerRef} className="absolute inset-0 -z-10" />
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -124,7 +137,7 @@ export const HeroSection = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="mb-4"
           >
-            <span className="px-4 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary inline-block">
+            <span className="px-4 py-1 rounded-full text-sm font-medium bg-neon-purple/10 text-neon-purple neon-glow inline-block">
               Welcome to my portfolio
             </span>
           </motion.div>
@@ -132,7 +145,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-4xl md:text-6xl font-display font-bold mb-6"
+            className="text-4xl md:text-6xl font-display font-bold mb-6 text-white"
           >
             Creative Developer &
             <br />
@@ -153,7 +166,7 @@ export const HeroSection = () => {
           >
             <a
               href="#contact"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8"
+              className="neon-button inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-neon-purple/20 text-neon-purple hover:bg-neon-purple/30 h-11 px-8 neon-glow"
             >
               Get in touch
             </a>
