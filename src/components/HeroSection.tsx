@@ -19,41 +19,89 @@ export const HeroSection = () => {
       0.1,
       1000
     );
-    rendererRef.current = new THREE.WebGLRenderer({ alpha: true });
+    rendererRef.current = new THREE.WebGLRenderer({ 
+      alpha: true,
+      antialias: true 
+    });
     rendererRef.current.setSize(window.innerWidth, window.innerHeight);
     containerRef.current.appendChild(rendererRef.current.domElement);
 
-    // Add geometric shapes
-    const geometry = new THREE.IcosahedronGeometry(1, 0);
-    const material = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
+    // Create multiple geometric shapes with neon materials
+    const shapes: THREE.Mesh[] = [];
+    
+    // Icosahedron with neon purple
+    const icoGeometry = new THREE.IcosahedronGeometry(1.2, 0);
+    const icoMaterial = new THREE.MeshPhongMaterial({
+      color: 0x8B5CF6,
       wireframe: true,
+      emissive: 0x8B5CF6,
+      emissiveIntensity: 0.5,
     });
-    const shape = new THREE.Mesh(geometry, material);
-    sceneRef.current.add(shape);
+    const icosahedron = new THREE.Mesh(icoGeometry, icoMaterial);
+    shapes.push(icosahedron);
+
+    // Torus with neon pink
+    const torusGeometry = new THREE.TorusGeometry(0.8, 0.2, 16, 100);
+    const torusMaterial = new THREE.MeshPhongMaterial({
+      color: 0xD946EF,
+      wireframe: true,
+      emissive: 0xD946EF,
+      emissiveIntensity: 0.5,
+    });
+    const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+    torus.position.x = 2;
+    shapes.push(torus);
+
+    // Octahedron with neon blue
+    const octaGeometry = new THREE.OctahedronGeometry(0.8);
+    const octaMaterial = new THREE.MeshPhongMaterial({
+      color: 0x0EA5E9,
+      wireframe: true,
+      emissive: 0x0EA5E9,
+      emissiveIntensity: 0.5,
+    });
+    const octahedron = new THREE.Mesh(octaGeometry, octaMaterial);
+    octahedron.position.x = -2;
+    shapes.push(octahedron);
+
+    shapes.forEach(shape => sceneRef.current?.add(shape));
 
     // Add lighting
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(0, 0, 2);
-    sceneRef.current.add(light);
+    const ambientLight = new THREE.AmbientLight(0x404040, 2);
+    sceneRef.current?.add(ambientLight);
+
+    const pointLight = new THREE.PointLight(0xffffff, 2);
+    pointLight.position.set(5, 5, 5);
+    sceneRef.current?.add(pointLight);
 
     cameraRef.current.position.z = 5;
 
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
-      if (shape) {
-        shape.rotation.x += 0.001;
-        shape.rotation.y += 0.001;
-      }
+      shapes.forEach(shape => {
+        shape.rotation.x += 0.002;
+        shape.rotation.y += 0.002;
+      });
       if (sceneRef.current && cameraRef.current && rendererRef.current) {
         rendererRef.current.render(sceneRef.current, cameraRef.current);
       }
     };
     animate();
 
+    // Handle window resize
+    const handleResize = () => {
+      if (!cameraRef.current || !rendererRef.current) return;
+      
+      cameraRef.current.aspect = window.innerWidth / window.innerHeight;
+      cameraRef.current.updateProjectionMatrix();
+      rendererRef.current.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener('resize', handleResize);
+
     // Cleanup
     return () => {
+      window.removeEventListener('resize', handleResize);
       if (containerRef.current && rendererRef.current) {
         containerRef.current.removeChild(rendererRef.current.domElement);
       }
