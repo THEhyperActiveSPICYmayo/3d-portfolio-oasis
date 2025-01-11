@@ -1,12 +1,39 @@
 import { motion, useAnimation } from 'framer-motion';
-import { useState } from 'react';
-import { useToast } from "@/components/ui/use-toast";
+import { useState, useEffect } from 'react';
+import { useToast } from "@/hooks/use-toast";
 import { Mail } from 'lucide-react';
+import gsap from 'gsap';
 
 export const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [focusedInput, setFocusedInput] = useState<string | null>(null);
   const iconControls = useAnimation();
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Initialize GSAP animations
+    gsap.to(".neon-input", {
+      duration: 0.3,
+      boxShadow: "0 0 10px rgba(74, 222, 128, 0.2)",
+      paused: true,
+    });
+  }, []);
+
+  const handleInputFocus = (inputId: string) => {
+    setFocusedInput(inputId);
+    gsap.to(`#${inputId}`, {
+      duration: 0.3,
+      boxShadow: "0 0 20px rgba(74, 222, 128, 0.4), 0 0 40px rgba(74, 222, 128, 0.2)",
+    });
+  };
+
+  const handleInputBlur = () => {
+    setFocusedInput(null);
+    gsap.to(".neon-input", {
+      duration: 0.3,
+      boxShadow: "0 0 10px rgba(74, 222, 128, 0.2)",
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,6 +44,20 @@ export const ContactSection = () => {
       rotate: [0, 360],
       scale: [1, 1.2, 1],
       transition: { duration: 0.5 }
+    });
+
+    // Success animation for the envelope
+    gsap.to(".mail-icon", {
+      y: -20,
+      opacity: 0,
+      duration: 0.5,
+      onComplete: () => {
+        gsap.to(".mail-icon", {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+        });
+      },
     });
 
     // Simulate form submission
@@ -62,7 +103,7 @@ export const ContactSection = () => {
             animate={iconControls}
             className="flex justify-center mb-8"
           >
-            <Mail className="w-12 h-12 text-neon-green" />
+            <Mail className="w-12 h-12 text-neon-green mail-icon" />
           </motion.div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -73,8 +114,12 @@ export const ContactSection = () => {
               <input
                 id="name"
                 type="text"
-                className="flex h-10 w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white neon-border transition-all duration-300 focus:border-neon-green hover:border-neon-green/70"
+                className={`neon-input flex h-10 w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white transition-all duration-300 ${
+                  focusedInput === 'name' ? 'border-neon-green' : ''
+                }`}
                 placeholder="Your name"
+                onFocus={() => handleInputFocus('name')}
+                onBlur={handleInputBlur}
               />
             </div>
             <div className="space-y-2">
@@ -84,8 +129,12 @@ export const ContactSection = () => {
               <input
                 id="email"
                 type="email"
-                className="flex h-10 w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white neon-border transition-all duration-300 focus:border-neon-green hover:border-neon-green/70"
+                className={`neon-input flex h-10 w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white transition-all duration-300 ${
+                  focusedInput === 'email' ? 'border-neon-green' : ''
+                }`}
                 placeholder="Your email"
+                onFocus={() => handleInputFocus('email')}
+                onBlur={handleInputBlur}
               />
             </div>
             <div className="space-y-2">
@@ -94,17 +143,23 @@ export const ContactSection = () => {
               </label>
               <textarea
                 id="message"
-                className="flex min-h-[120px] w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white neon-border transition-all duration-300 focus:border-neon-green hover:border-neon-green/70"
+                className={`neon-input flex min-h-[120px] w-full rounded-md border bg-black/50 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-green focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 border-neon-green/50 text-white transition-all duration-300 ${
+                  focusedInput === 'message' ? 'border-neon-green' : ''
+                }`}
                 placeholder="Your message"
+                onFocus={() => handleInputFocus('message')}
+                onBlur={handleInputBlur}
               />
             </div>
-            <button
+            <motion.button
               type="submit"
               disabled={isSubmitting}
               className="neon-button inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-neon-green/20 text-neon-green hover:bg-neon-green/30 h-11 px-8 w-full neon-glow"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               {isSubmitting ? "Sending..." : "Send Message"}
-            </button>
+            </motion.button>
           </form>
         </motion.div>
       </div>
