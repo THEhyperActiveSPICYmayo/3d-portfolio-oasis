@@ -108,6 +108,25 @@
                  0 0 30px currentColor,
                  0 0 40px currentColor;
   }
+
+  .neon-timeline-line {
+    @apply absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-neon-purple/20 via-neon-purple/40 to-neon-purple/20;
+    box-shadow: 0 0 10px theme('colors.neon.purple'),
+                0 0 20px theme('colors.neon.purple');
+  }
+
+  .neon-timeline-dot {
+    @apply absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-neon-purple;
+    box-shadow: 0 0 10px theme('colors.neon.purple'),
+                0 0 20px theme('colors.neon.purple');
+  }
+
+  .neon-hover-card {
+    @apply transition-all duration-300;
+    &:hover {
+      box-shadow: 0 0 20px theme('colors.neon.purple'),
+                  0 0 40px theme('colors.neon.purple');
+    }
 }
 
 @keyframes neon-pulse {
