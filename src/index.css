@@ -146,6 +146,37 @@
       @apply opacity-20;
     }
   }
+
+  .custom-cursor {
+    @apply fixed w-6 h-6 rounded-full pointer-events-none z-50 mix-blend-difference;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(139, 92, 246, 0.4) 60%, transparent 100%);
+    transform-origin: center;
+    transition: transform 0.15s ease-out;
+  }
+
+  .cursor-trail-dot {
+    @apply fixed w-3 h-3 rounded-full pointer-events-none z-40;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 100%);
+    margin-left: -6px;
+    margin-top: -6px;
+  }
+
+  .neon-explosion {
+    @apply fixed inset-0 pointer-events-none z-50;
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+  }
+
+  .neon-intensified {
+    .neon-glow {
+      filter: brightness(1.5);
+    }
+    .neon-text {
+      text-shadow: 0 0 20px currentColor,
+                   0 0 40px currentColor,
+                   0 0 60px currentColor,
+                   0 0 80px currentColor;
+    }
+  }
 }
 
 @keyframes neon-pulse {
