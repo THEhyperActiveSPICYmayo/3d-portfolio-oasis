@@ -127,6 +127,7 @@
       box-shadow: 0 0 20px theme('colors.neon.purple'),
                   0 0 40px theme('colors.neon.purple');
     }
+  }
 }
 
 @keyframes neon-pulse {
