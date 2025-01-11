@@ -128,6 +128,24 @@
                   0 0 40px theme('colors.neon.purple');
     }
   }
+
+  .scroll-trail {
+    @apply fixed bottom-0 right-10 w-1 bg-gradient-to-t from-neon-blue/0 via-neon-blue/50 to-neon-blue;
+    pointer-events: none;
+    z-index: 50;
+  }
+
+  .social-icon {
+    @apply relative inline-flex items-center justify-center;
+    &::before {
+      content: '';
+      @apply absolute inset-0 rounded-full bg-current opacity-0 transition-opacity duration-300;
+      filter: blur(8px);
+    }
+    &:hover::before {
+      @apply opacity-20;
+    }
+  }
 }
 
 @keyframes neon-pulse {
