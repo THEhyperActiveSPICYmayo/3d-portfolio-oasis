@@ -83,3 +83,5 @@ export const ExperienceSection = () => {
     </section>
   );
 };
+
+export default ExperienceSection;

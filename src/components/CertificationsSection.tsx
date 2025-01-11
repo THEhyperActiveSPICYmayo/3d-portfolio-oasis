@@ -52,3 +52,5 @@ export const CertificationsSection = () => {
     </section>
   );
 };
+
+export default CertificationsSection;
